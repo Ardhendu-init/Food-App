@@ -14,7 +14,7 @@ const Navbar: React.FC = () => {
   const user = false; // Change this based on user authentication
 
   return (
-    <div className="h-12 md:h-16 bg-gradient-to-r from-red-500 to-orange-500 text-white p-4 flex items-center justify-between border-b-2 border-b-red-500 font-medium  lg:px-20 xl:px- text-lg ">
+    <div className="h-12 md:h-16 bg-gradient-to-r from-red-500 to-orange-500 text-white p-4 flex items-center justify-between border-b-2 border-b-red-500 font-medium  lg:px-20  text-lg ">
       {/* LEFT LINKS */}
       <div className="hidden md:flex gap-4 flex-1">
         {menuItems.map((item) => (
@@ -31,7 +31,7 @@ const Navbar: React.FC = () => {
             width={200}
             height={100}
             alt="Food_App_Logo"
-            className="sm:h-12"
+            className="h-[50px]"
           />
         </Link>
       </div>
