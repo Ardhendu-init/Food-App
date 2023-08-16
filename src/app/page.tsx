@@ -1,3 +1,10 @@
+import Slider from "@/components/Slider";
+
 export default function Home() {
-  return <main> Hello From Resturant App</main>;
+  return (
+    <main>
+      {" "}
+      <Slider />
+    </main>
+  );
 }
