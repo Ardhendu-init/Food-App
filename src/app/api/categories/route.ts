@@ -1,9 +1,14 @@
-import { NextFetchEvent, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/utils/client";
+import { NextResponse } from "next/server";
 
 export const GET = async () => {
-  const data = await prisma.post.findMany();
-  return new NextResponse(JSON.stringify(data));
+  try {
+    const categories = await prisma.category.findMany();
+    return new NextResponse(JSON.stringify(categories), { status: 200 });
+  } catch (error) {
+    return new NextResponse(
+      JSON.stringify({ message: "Something Went Wrong " }),
+      { status: 500 }
+    );
+  }
 };

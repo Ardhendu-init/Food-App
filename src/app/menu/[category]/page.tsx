@@ -1,13 +1,33 @@
 import { pizzas } from "@/data";
+import { ProductType } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { FaStar } from "react-icons/fa";
 
-const CategoryPage: React.FC = () => {
+const getProducts = async (category: string) => {
+  const res = await fetch(
+    `http://localhost:3000/api/products?cat=${category}`,
+    {
+      cache: "no-store",
+    }
+  );
+  if (!res.ok) {
+    throw new Error("Failed");
+  }
+  return res.json();
+};
+
+type paramsProps = {
+  params: { category: string };
+};
+
+const CategoryPage: React.FC<paramsProps> = async ({ params }) => {
+  const products: ProductType[] = await getProducts(params.category);
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 py-6">
-      {pizzas.map((item) => (
+      {products.map((item) => (
         <div
           key={item.id}
           className="border rounded-lg overflow-hidden hover:shadow-md transition duration-300 bg-white even:bg-fuchsia-50"
