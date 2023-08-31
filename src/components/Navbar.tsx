@@ -26,13 +26,9 @@ const Navbar: React.FC = () => {
       {/* LOGO */}
       <div className="flex-1 md:justify-center flex ">
         <Link href="/">
-          <Image
-            src="/foodappLogo.png"
-            width={200}
-            height={100}
-            alt="Food_App_Logo"
-            className="h-[50px]"
-          />
+          <h1 className=" text-lg md:text-3xl font-bold  border-2 p-1 rounded-md">
+            CraveWave
+          </h1>
         </Link>
       </div>
       {/* MOBILE MENU */}
