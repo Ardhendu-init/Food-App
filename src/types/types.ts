@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export type MenuType = {
   id: number;
   slug: string;
@@ -16,3 +18,6 @@ export type ProductType = {
   rating?: number;
   options?: { title: string; additionalPrice: number }[];
 };
+export interface ChildrenProps {
+  children: ReactNode;
+}
