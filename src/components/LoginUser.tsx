@@ -3,6 +3,7 @@ import React from "react";
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const LoginUser: React.FC = () => {
   const { status, data } = useSession();
@@ -19,7 +20,7 @@ const LoginUser: React.FC = () => {
           Login
         </button>
       ) : (
-        <>
+        <div>
           <Image
             src={data?.user?.image || "/user_icon.svg"}
             alt="User Icon"
@@ -33,13 +34,21 @@ const LoginUser: React.FC = () => {
               Welcome {String(data?.user?.name).split(" ")[0]} !
             </p>
             <button
-              className="cursor-pointer bg-orange-300 px-2  rounded-md   font-medium hover:bg-orange-400"
+              className="cursor-pointer bg-orange-300 px-2  rounded-md   font-medium hover:bg-orange-400 "
               onClick={() => signOut()}
             >
               Logout
             </button>
+            <div>
+              <Link
+                href="/orders"
+                className="bg-orange-300 px-2 py-1 rounded-md hover:bg-orange-400"
+              >
+                Orders
+              </Link>
+            </div>
           </div>
-        </>
+        </div>
       )}
     </div>
   );
