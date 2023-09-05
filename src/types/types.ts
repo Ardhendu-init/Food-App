@@ -21,3 +21,13 @@ export type ProductType = {
 export interface ChildrenProps {
   children: ReactNode;
 }
+
+export type OrderType = {
+  id: string;
+  userEmail: string;
+  price: number;
+  // products: CartItemType[];
+  status: string;
+  createdAt: Date;
+  intent_id?: String;
+};

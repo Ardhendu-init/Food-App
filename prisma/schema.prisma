@@ -43,6 +43,7 @@ model User {
   isAdmin       Boolean   @default(false)
   accounts      Account[]
   sessions      Session[]
+  orders        Order[]
 }
 
 model VerificationToken {
@@ -85,6 +86,6 @@ model Order {
   products  Json[]
   status    String
   intent_id String?  @unique
-  // user      User     @relation(fields: [userEmail], references: [email])
+  user      User     @relation(fields: [userEmail], references: [email])
   userEmail String
 }
