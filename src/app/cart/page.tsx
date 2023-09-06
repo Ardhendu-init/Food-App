@@ -1,14 +1,42 @@
 "use client";
 import { useCartStore } from "@/utils/store";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { FaTrash } from "react-icons/fa";
 
 const CartPage = () => {
   const { products, totalItems, totalPrice, removeFromCart } = useCartStore();
+  const { data: session } = useSession();
+  const router = useRouter();
+
   useEffect(() => {
     useCartStore.persist.rehydrate();
   }, []);
+
+  const handleCheckout = async () => {
+    if (!session) {
+      router.push("/login");
+    } else {
+      try {
+        const res = await fetch("http://localhost:3000/api/orders", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            price: totalPrice,
+            products,
+            status: "Not Paid!",
+            userEmail: session.user.email,
+          }),
+        });
+        const data = await res.json();
+        router.push(`/pay/${data.id}`);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
 
   return (
     <div className="h-[calc(100vh-9rem)]  flex flex-col text-red-500 lg:flex-row ">
@@ -70,7 +98,10 @@ const CartPage = () => {
           <span className="font-semibold">TOTAL (Incl. VAT)</span>
           <span className="font-bold text-red-600">₹ {totalPrice}</span>
         </div>
-        <button className="bg-red-500 text-white py-3 rounded-md hover:bg-red-600 transition transform hover:scale-105 focus:outline-none">
+        <button
+          className="bg-red-500 text-white py-3 rounded-md hover:bg-red-600 transition transform hover:scale-105 focus:outline-none"
+          onClick={handleCheckout}
+        >
           CHECKOUT
         </button>
       </div>
