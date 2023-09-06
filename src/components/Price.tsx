@@ -1,42 +1,62 @@
 "use client";
 
+import { ProductType } from "@/types/types";
+import { useCartStore } from "@/utils/store";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
-type Props = {
-  price: number;
-  id: number;
-  options?: { title: string; additionalPrice: number }[];
-};
-
-const Price = ({ price, id, options }: Props) => {
-  const [total, setTotal] = useState(price);
+const Price = ({ product }: { product: ProductType }) => {
+  const [total, setTotal] = useState(product.price);
   const [quantity, setQuantity] = useState(1);
   const [selected, setSelected] = useState(0);
+  const { addToCart } = useCartStore();
+
+  useEffect(() => {
+    useCartStore.persist.rehydrate();
+  }, []);
 
   useEffect(() => {
     setTotal(
-      quantity * (options ? price + options[selected].additionalPrice : price)
+      quantity *
+        (product.options?.length
+          ? product.price + product.options[selected].additionalPrice
+          : product.price)
     );
-  }, [quantity, selected, options, price]);
+  }, [quantity, selected, product]);
+
+  const handleCart = () => {
+    addToCart({
+      id: product.id,
+      title: product.title,
+      img: product.img,
+      price: total,
+      ...(product.options?.length && {
+        optionTitle: product.options[selected].title,
+      }),
+      quantity: quantity,
+    });
+    toast.success("The product added to the cart!");
+  };
 
   return (
     <div className="flex flex-col gap-4">
       <h2 className="text-2xl font-bold text-red-500">${total.toFixed(2)}</h2>
       {/* OPTIONS CONTAINER */}
       <div className="flex gap-4">
-        {options?.map((option, index) => (
-          <button
-            key={option.title}
-            className={`min-w-[6rem] py-2 px-4 rounded-md ${
-              selected === index
-                ? "bg-red-500 text-white"
-                : "bg-red-100 text-red-500"
-            }`}
-            onClick={() => setSelected(index)}
-          >
-            {option.title}
-          </button>
-        ))}
+        {product.options?.length &&
+          product.options?.map((option, index) => (
+            <button
+              key={option.title}
+              className={`min-w-[6rem] py-2 px-4 rounded-md ${
+                selected === index
+                  ? "bg-red-500 text-white"
+                  : "bg-red-100 text-red-500"
+              }`}
+              onClick={() => setSelected(index)}
+            >
+              {option.title}
+            </button>
+          ))}
       </div>
       {/* QUANTITY AND ADD BUTTON CONTAINER */}
       <div className="flex justify-between  flex-col gap-6">
@@ -60,7 +80,10 @@ const Price = ({ price, id, options }: Props) => {
           </div>
         </div>
         {/* CART BUTTON */}
-        <button className="uppercase  bg-red-500 text-white p-3 rounded-md">
+        <button
+          className="uppercase  bg-red-500 text-white p-3 rounded-md"
+          onClick={() => handleCart()}
+        >
           Add to Cart
         </button>
       </div>

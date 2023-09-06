@@ -71,9 +71,9 @@ const CategoryPage: React.FC<paramsProps> = async ({ params }) => {
               </div>
             </div>
           </Link>
-          <button className="bg-red-500 text-white text-center py-2 w-full">
+          {/* <button className="bg-red-500 text-white text-center py-2 w-full">
             Add to Cart
-          </button>
+          </button> */}
         </div>
       ))}
     </div>
