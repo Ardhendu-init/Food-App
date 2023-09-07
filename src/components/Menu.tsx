@@ -7,18 +7,21 @@ import CartIcon from "./CartIcon";
 
 import { RiMenu3Line } from "react-icons/ri";
 import { MdRestaurantMenu } from "react-icons/md";
+import { signOut, useSession } from "next-auth/react";
+import LoginUser from "./LoginUser";
+import { useRouter } from "next/navigation";
 const links = [
   { id: 1, title: "Homepage", url: "/" },
   { id: 2, title: "Menu", url: "/menu" },
-  { id: 3, title: "Working Hours", url: "/" },
+
   { id: 4, title: "Contact", url: "/" },
 ];
 
 const Menu = () => {
   const [open, setOpen] = useState(false);
+  const { status, data } = useSession();
+  const router = useRouter();
 
-  // TEMPORARY
-  const user = false;
   return (
     <div>
       <div
@@ -41,17 +44,51 @@ const Menu = () => {
             </Link>
           ))}
 
-          <Link
-            href={user ? "/orders" : "login"}
-            onClick={() => setOpen(false)}
-            className="hover:font-bold"
-          >
-            {user ? "Orders" : "Login"}
-          </Link>
+          {status === "unauthenticated" ? (
+            <button
+              className="cursor-pointer bg-orange-300 hover:bg-orange-400 px-2  rounded-md   font-medium"
+              onClick={() => router.push("/login")}
+            >
+              Login
+            </button>
+          ) : (
+            <div className="flex flex-col items-center gap-3">
+              <div className="flex gap-2">
+                {data?.user?.image && (
+                  <Image
+                    src={data?.user?.image}
+                    alt="User Icon"
+                    width={40}
+                    height={40}
+                    className="cursor-pointer rounded-full"
+                  />
+                )}
+                <p className="whitespace-nowrap">
+                  {" "}
+                  Welcome {String(data?.user?.name).split(" ")[0]} !
+                </p>
+              </div>
+              <button
+                className="cursor-pointer bg-orange-300 px-2 py-1 rounded-md   font-medium hover:bg-orange-400 text-2xl"
+                onClick={() => signOut()}
+              >
+                Logout
+              </button>
+              <div>
+                <Link
+                  href="/orders"
+                  className="bg-orange-300 px-2 py-1 rounded-md hover:bg-orange-400 text-2xl"
+                >
+                  Orders
+                </Link>
+              </div>
+            </div>
+          )}
+
           <Link
             href="/cart"
             onClick={() => setOpen(false)}
-            className="hover:font-bold"
+            className="hover:font-bold text-2xl"
           >
             <CartIcon />
           </Link>
