@@ -100,7 +100,13 @@ const CheckoutForm = () => {
         className="bg-red-500 text-white p-4 rounded-md w-28"
       >
         <span id="button-text">
-          {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
+          {isLoading ? (
+            <div className="spinne" id="spinner">
+              Processing
+            </div>
+          ) : (
+            "Pay now"
+          )}
         </span>
       </button>
       {/* Show any error or success messages */}
