@@ -2,15 +2,19 @@
 
 import { ProductType } from "@/types/types";
 import { useCartStore } from "@/utils/store";
+import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
+import { FaStar } from "react-icons/fa";
 import { toast } from "react-toastify";
+import DeleteButton from "./DeleteButton";
 
 const Price = ({ product }: { product: ProductType }) => {
   const [total, setTotal] = useState(product.price);
   const [quantity, setQuantity] = useState(1);
   const [selected, setSelected] = useState(0);
   const { addToCart } = useCartStore();
-  console.log("second", product);
+  const { data } = useSession();
+
   useEffect(() => {
     useCartStore.persist.rehydrate();
   }, []);
@@ -40,7 +44,22 @@ const Price = ({ product }: { product: ProductType }) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="text-2xl font-bold text-red-500">${total.toFixed(2)}</h2>
+      {product.rating && (
+        <div className="flex items-center">
+          <span className="text-yellow-400">
+            {Array.from({ length: Math.floor(product.rating) }).map(
+              (_, index) => (
+                <FaStar key={index} className="inline text-yellow-400" />
+              )
+            )}
+          </span>
+          <span className="text-orange-600 font-medium ml-1 mt-1">
+            ({product.rating?.toFixed(1)})
+          </span>
+        </div>
+      )}
+      <h2 className="text-2xl font-bold text-red-500">₹{total.toFixed(2)}</h2>
+
       {/* OPTIONS CONTAINER */}
       <div className="flex gap-4">
         {product.options?.length &&
@@ -80,12 +99,16 @@ const Price = ({ product }: { product: ProductType }) => {
           </div>
         </div>
         {/* CART BUTTON */}
-        <button
-          className="uppercase  bg-red-500 text-white p-3 rounded-md"
-          onClick={() => handleCart()}
-        >
-          Add to Cart
-        </button>
+        {!data?.user.isAdmin ? (
+          <button
+            className="uppercase  bg-red-500 text-white p-3 rounded-md"
+            onClick={() => handleCart()}
+          >
+            Add to Cart
+          </button>
+        ) : (
+          <DeleteButton id={product.id} />
+        )}
       </div>
     </div>
   );

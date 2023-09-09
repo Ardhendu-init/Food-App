@@ -58,6 +58,7 @@ export type Inputs = {
   desc: string;
   price: number;
   catSlug: string;
+  rating: number;
 };
 
 export type Option = {

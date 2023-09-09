@@ -77,6 +77,7 @@ model Product {
   options    Json[]
   category   Category @relation(fields: [catSlug], references: [slug])
   catSlug    String
+  rating     Float?
 }
 
 model Order {

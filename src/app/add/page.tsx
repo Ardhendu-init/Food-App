@@ -2,17 +2,19 @@
 
 import { Inputs, Option } from "@/types/types";
 import { useSession } from "next-auth/react";
-import { FaUpload, FaPlusCircle, FaTrash } from "react-icons/fa";
+import { FaUpload, FaPlusCircle, FaTrash, FaImage } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const AddPage = () => {
   const { data: session, status } = useSession();
+  const [processing, setProcessing] = useState<boolean>(false);
   const [inputs, setInputs] = useState<Inputs>({
     title: "",
     desc: "",
     price: 0,
     catSlug: "",
+    rating: 0,
   });
 
   const [option, setOption] = useState<Option>({
@@ -40,7 +42,8 @@ const AddPage = () => {
     setInputs((prev) => {
       return {
         ...prev,
-        [name]: name === "price" ? parseFloat(value) : value,
+        [name]:
+          name === "price" || name === "rating" ? parseFloat(value) : value,
       };
     });
   };
@@ -83,10 +86,11 @@ const AddPage = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("first", inputs, option);
+    setProcessing(true);
+
     try {
       const url = await upload();
-      // const url = "//temporary/p1.png";
+
       const res = await fetch("http://localhost:3000/api/products", {
         method: "POST",
         body: JSON.stringify({
@@ -148,8 +152,24 @@ const AddPage = () => {
             <input
               className="ring-1 ring-red-200 p-4 rounded-sm placeholder-text-red-200 outline-none"
               type="text"
-              placeholder="pizzas"
+              placeholder="pizzas/burgers/pastas"
               name="catSlug"
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="w-full flex flex-col gap-3 ">
+            <label className="text-lg text-white font-medium">
+              Rating (out of 5)
+            </label>{" "}
+            <input
+              className="ring-1 ring-red-200 p-4 rounded-sm placeholder-red-200 outline-none"
+              type="number"
+              placeholder="4.5"
+              name="rating"
+              step="0.1"
+              min="0"
+              max="5"
               onChange={handleChange}
             />
           </div>
@@ -202,7 +222,7 @@ const AddPage = () => {
               className="text-sm cursor-pointer flex gap-4 items-center"
               htmlFor="file"
             >
-              <FaUpload /> {/* Replace the image with the FaUpload icon */}
+              <FaUpload />
               <span>Upload Image</span>
             </label>
             <input
@@ -211,13 +231,22 @@ const AddPage = () => {
               id="file"
               className="hidden"
             />
+            {file && (
+              <div className="text-white flex items-center">
+                <FaImage className="mr-2" />
+                {file.name}
+              </div>
+            )}
           </div>
         </div>
         <button
           type="submit"
-          className="bg-red-500 p-4 text-white rounded-md hover:bg-red-600 transition-colors duration-300 w-full"
+          className={`bg-red-500 p-3 text-white text-lg font-semibold rounded-md hover:bg-red-600 transition-colors duration-300 w-full ${
+            processing ? "opacity-60 cursor-not-allowed" : ""
+          }`}
+          disabled={processing}
         >
-          Submit
+          {processing ? "Processing ...." : "Submit"}
         </button>
       </form>
     </div>
