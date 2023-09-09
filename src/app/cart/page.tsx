@@ -26,7 +26,7 @@ const CartPage = () => {
           body: JSON.stringify({
             price: totalPrice,
             products,
-            status: "Not Paid!",
+            status: "Paid!",
             userEmail: session.user.email,
           }),
         });
@@ -83,7 +83,7 @@ const CartPage = () => {
       <div className="h-1/2 p-4 bg-gray-100 flex flex-col gap-4 justify-center lg:h-full lg:w-1/3 2xl:w-1/2 lg:px-20 2xl:text-xl 2xl:gap-6">
         <div className="flex justify-between">
           <span className="font-semibold">Subtotal ({totalItems} items)</span>
-          <span className="font-semibold">₹ {totalPrice}</span>
+          <span className="font-semibold">₹ {totalPrice.toFixed(2)}</span>
         </div>
         <div className="flex justify-between">
           <span className="font-semibold">Service Cost</span>
@@ -96,7 +96,9 @@ const CartPage = () => {
         <hr className="my-2 border-gray-300" />
         <div className="flex justify-between">
           <span className="font-semibold">TOTAL (Incl. VAT)</span>
-          <span className="font-bold text-red-600">₹ {totalPrice}</span>
+          <span className="font-bold text-red-600">
+            ₹ {totalPrice.toFixed(2)}
+          </span>
         </div>
         <button
           className="bg-red-500 text-white py-3 rounded-md hover:bg-red-600 transition transform hover:scale-105 focus:outline-none"

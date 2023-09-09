@@ -8,7 +8,7 @@ import LoginUser from "./LoginUser";
 const menuItems = [
   { text: "Home", path: "/" },
   { text: "Menu", path: "/menu" },
-  { text: "Contact", path: "/" },
+  { text: "Contact", path: "/contact" },
 ];
 
 const Navbar: React.FC = () => {
@@ -17,7 +17,11 @@ const Navbar: React.FC = () => {
       {/* LEFT LINKS */}
       <div className="hidden md:flex gap-4 flex-1">
         {menuItems.map((item) => (
-          <Link key={item.text} href={item.path}>
+          <Link
+            key={item.text}
+            href={item.path}
+            className="text-white hover:text-red-700 transition duration-300 hover:bg-gray-100 hover:rounded-md px-2 py-1"
+          >
             {item.text}
           </Link>
         ))}

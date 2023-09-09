@@ -25,7 +25,7 @@ const CartIcon = () => {
       ) : (
         <Link href="/cart" className="relative">
           <div className=" w-12 h-12 md:w-5 md:h-5">
-            <Image src="/cart.png" alt="Cart-icon" fill />
+            <Image src="/cart.png" alt="Cart-icon" fill sizes="" />
             <span className="absolute top-[-10px] right-[-11px] text-base">
               {totalItems}
             </span>

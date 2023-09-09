@@ -21,13 +21,16 @@ const LoginUser: React.FC = () => {
         </button>
       ) : (
         <div>
-          <Image
-            src={data?.user?.image || "/user_icon.svg"}
-            alt="User Icon"
-            width={40}
-            height={40}
-            className="cursor-pointer rounded-full"
-          />
+          {data?.user.image && (
+            <Image
+              src={data?.user?.image}
+              alt="User Icon"
+              width={40}
+              height={40}
+              className="cursor-pointer rounded-full"
+            />
+          )}
+
           <div className="absolute top-full right-0 hidden group-hover:block bg-gradient-to-t from-red-500 to-orange-500 text-white py-2 px-4 space-y-2 border border-gray-200 rounded-lg shadow-lg z-10 ">
             <p className="whitespace-nowrap">
               {" "}

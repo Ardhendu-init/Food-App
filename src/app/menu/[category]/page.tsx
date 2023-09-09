@@ -1,4 +1,3 @@
-import { pizzas } from "@/data";
 import { ProductType } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
@@ -66,7 +65,7 @@ const CategoryPage: React.FC<paramsProps> = async ({ params }) => {
                   </div>
                 )}
                 <span className="text-lg font-bold text-red-500">
-                  Price - ${item.price}
+                  Price - ₹{item.price.toFixed(2)}
                 </span>
               </div>
             </div>

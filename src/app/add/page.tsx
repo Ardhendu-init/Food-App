@@ -190,7 +190,7 @@ const AddPage = () => {
                   }
                 >
                   <span>{opt.title}</span>
-                  <span className="text-xs"> (+{opt.additionalPrice})</span>
+                  <span className="text-xs"> (+₹{opt.additionalPrice})</span>
                   <FaTrash className="text-red-500 cursor-pointer" />{" "}
                   {/* Delete icon */}
                 </div>

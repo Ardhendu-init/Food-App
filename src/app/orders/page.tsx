@@ -50,8 +50,8 @@ const OrdersPage = () => {
     router.push("/");
   } else {
     return (
-      <div className="p-4 lg:px-20 xl:px-40">
-        <table className="w-full border-collapse border">
+      <div className="p-4 lg:px-20 xl:px-40 overflow-auto">
+        <table className="w-full border-collapse border  ">
           <thead>
             <tr className="text-left bg-red-500 text-white">
               <th className="hidden md:table-cell py-3 px-4">Order ID</th>
