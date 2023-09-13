@@ -1,8 +1,7 @@
 import Axios from "axios";
 
-const BASE_URL = "http://localhost:3000/api";
 export const serverAxios = Axios.create({
-  baseURL: BASE_URL,
+  baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
   headers: {
     "Content-Type": "application/json",
   },
