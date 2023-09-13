@@ -5,28 +5,28 @@ import Link from "next/link";
 import React from "react";
 import { FaStar } from "react-icons/fa";
 
-const getFeaturedProduct = async () => {
-  try {
-    const response = await serverAxios.get("/products", {
-      headers: {
-        "Cache-Control": "no-store",
-      },
-    });
+// const getFeaturedProduct = async () => {
+//   try {
+//     const response = await serverAxios.get("/products", {
+//       headers: {
+//         "Cache-Control": "no-store",
+//       },
+//     });
 
-    if (response.status === 200) {
-      return response.data;
-    } else {
-      throw new Error("Failed");
-    }
-  } catch (error) {
-    console.error(error);
+//     if (response.status === 200) {
+//       return response.data;
+//     } else {
+//       throw new Error("Failed");
+//     }
+//   } catch (error) {
+//     console.error(error);
 
-    throw error;
-  }
-};
+//     throw error;
+//   }
+// };
 
-const Featured: React.FC = async () => {
-  const featuredProducts: ProductType[] = await getFeaturedProduct();
+const Featured: React.FC = () => {
+  const featuredProducts: ProductType[] = [];
 
   return (
     <div className="w-full overflow-hidden bg-gray-100 py-10">
