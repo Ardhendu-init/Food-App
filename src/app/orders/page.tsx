@@ -23,25 +23,25 @@ const OrdersPage = () => {
 
   const queryClient = useQueryClient();
 
-  const mutation = useMutation({
-    mutationFn: ({ id, status }: { id: string; status: string }) => {
-      return fetch(`http://localhost:3000/api/orders/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(status),
-      });
-    },
-    onSuccess() {
-      queryClient.invalidateQueries({ queryKey: ["orders"] });
-    },
-  });
+  // const mutation = useMutation({
+  //   mutationFn: ({ id, status }: { id: string; status: string }) => {
+  //     return fetch(`http://localhost:3000/api/orders/${id}`, {
+  //       method: "PUT",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(status),
+  //     });
+  //   },
+  //   onSuccess() {
+  //     queryClient.invalidateQueries({ queryKey: ["orders"] });
+  //   },
+  // });
 
   const hanndleUpdate = (e: React.FormEvent<HTMLFormElement>, id: string) => {
     e.preventDefault();
     const status = statusUpdates[id];
-    mutation.mutate({ id, status });
+    // mutation.mutate({ id, status });
   };
   if (status === "loading" || isLoading) {
     return "Loading ...";
