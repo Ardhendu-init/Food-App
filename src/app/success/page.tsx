@@ -12,21 +12,20 @@ const SuccessPage = () => {
   const { resetCart } = useCartStore();
 
   useEffect(() => {
-    resetCart();
-    const makeRequest = async () => {
-      try {
-        await fetch(`http://localhost:3000/api/confirm/${payment_intent}`, {
-          method: "PUT",
-        });
-        setTimeout(() => {
-          router.push("/orders");
-        }, 1000);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    makeRequest();
+    // resetCart();
+    // const makeRequest = async () => {
+    //   try {
+    //     await fetch(`http://localhost:3000/api/confirm/${payment_intent}`, {
+    //       method: "PUT",
+    //     });
+    //     setTimeout(() => {
+    //       router.push("/orders");
+    //     }, 1000);
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // };
+    // makeRequest();
   }, [payment_intent, resetCart, router]);
 
   return (
