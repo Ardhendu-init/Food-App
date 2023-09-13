@@ -1,3 +1,4 @@
+"use client";
 import { MenuType } from "@/types/types";
 import serverAxios from "@/utils/http";
 import Link from "next/link";
