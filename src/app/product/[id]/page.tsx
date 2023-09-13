@@ -1,17 +1,28 @@
 import Price from "@/components/Price";
 
 import { ProductType } from "@/types/types";
+import serverAxios from "@/utils/http";
 import Image from "next/image";
 import React from "react";
 
 const getSingleProduct = async (id: string) => {
-  const res = await fetch(`http://localhost:3000/api/products/${id}`, {
-    cache: "no-store",
-  });
-  if (!res.ok) {
-    throw new Error("Failed");
+  try {
+    const response = await serverAxios.get(`/products/${id}`, {
+      headers: {
+        "Cache-Control": "no-store",
+      },
+    });
+
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error("Failed");
+    }
+  } catch (error) {
+    console.error(error);
+
+    throw error;
   }
-  return res.json();
 };
 
 const SingleProductPage: React.FC<{ params: { id: string } }> = async ({

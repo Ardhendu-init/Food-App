@@ -93,7 +93,7 @@ const CheckoutForm = () => {
           layout: "tabs",
         }}
       />
-      <AddressForm />
+      {/* <AddressForm /> */}
       <button
         disabled={isLoading || !stripe || !elements}
         id="submit"
@@ -102,7 +102,7 @@ const CheckoutForm = () => {
         <span id="button-text">
           {isLoading ? (
             <div className="spinne" id="spinner">
-              Processing
+              Processing ...
             </div>
           ) : (
             "Pay now"

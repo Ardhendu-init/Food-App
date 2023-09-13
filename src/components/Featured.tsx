@@ -1,17 +1,28 @@
 import { ProductType } from "@/types/types";
+import serverAxios from "@/utils/http";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { FaStar } from "react-icons/fa";
 
 const getFeaturedProduct = async () => {
-  const res = await fetch("http://localhost:3000/api/products", {
-    cache: "no-store",
-  });
-  if (!res.ok) {
-    throw new Error("Failed");
+  try {
+    const response = await serverAxios.get("/products", {
+      headers: {
+        "Cache-Control": "no-store",
+      },
+    });
+
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error("Failed");
+    }
+  } catch (error) {
+    console.error(error);
+
+    throw error;
   }
-  return res.json();
 };
 
 const Featured: React.FC = async () => {
@@ -23,7 +34,7 @@ const Featured: React.FC = async () => {
         <h2 className="text-3xl font-semibold text-center mb-6 text-red-500">
           Featured Products
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {featuredProducts.map((item) => (
             <div
               key={item.id}

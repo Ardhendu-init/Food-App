@@ -1,6 +1,7 @@
 "use client";
 
 import CheckoutForm from "@/components/CheckoutForm";
+import serverAxios from "@/utils/http";
 import { Elements } from "@stripe/react-stripe-js";
 import { StripeElementsOptions, loadStripe } from "@stripe/stripe-js";
 import { useEffect, useState } from "react";
@@ -17,13 +18,8 @@ const PayPage = ({ params }: { params: { id: string } }) => {
   useEffect(() => {
     const makeRequest = async () => {
       try {
-        const res = await fetch(
-          `http://localhost:3000/api/create-intent/${id}`,
-          {
-            method: "POST",
-          }
-        );
-        const data = await res.json();
+        const res = await serverAxios.post(`/create-intent/${id}`);
+        const data = await res.data;
         setClientSecret(data.clientSecret);
       } catch (err) {
         console.log(err);
@@ -42,10 +38,12 @@ const PayPage = ({ params }: { params: { id: string } }) => {
 
   return (
     <div>
-      {clientSecret && (
+      {clientSecret ? (
         <Elements options={options} stripe={stripePromise}>
           <CheckoutForm />
         </Elements>
+      ) : (
+        <div>Loading...</div>
       )}
     </div>
   );

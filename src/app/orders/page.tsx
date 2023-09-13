@@ -1,6 +1,8 @@
 "use client";
 import { OrderType } from "@/types/types";
+import serverAxios from "@/utils/http";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+
 import { useSession } from "next-auth/react";
 
 import { useRouter } from "next/navigation";
@@ -15,9 +17,7 @@ const OrdersPage = () => {
   const { isLoading, error, data } = useQuery({
     queryKey: ["orders"],
     queryFn: () => {
-      return fetch("http://localhost:3000/api/orders").then((res) =>
-        res.json()
-      );
+      return serverAxios.get("/orders").then((res) => res.data);
     },
   });
 

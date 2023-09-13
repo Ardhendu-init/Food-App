@@ -1,15 +1,26 @@
 import { MenuType } from "@/types/types";
+import serverAxios from "@/utils/http";
 import Link from "next/link";
 import React from "react";
 
 const getCategories = async () => {
-  const res = await fetch("http://localhost:3000/api/categories", {
-    cache: "no-store",
-  });
-  if (!res.ok) {
-    throw new Error("Failed");
+  try {
+    const response = await serverAxios.get("/categories", {
+      headers: {
+        "Cache-Control": "no-store",
+      },
+    });
+
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error("Failed");
+    }
+  } catch (error) {
+    console.error(error);
+
+    throw error;
   }
-  return res.json();
 };
 
 const MenuPage: React.FC = async () => {

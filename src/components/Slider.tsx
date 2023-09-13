@@ -1,36 +1,39 @@
 "use client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const data = [
   {
     id: 1,
     title: "always fresh & always crispy & always hot",
-    image: "/slide1.png",
+    image: "/slide1.webp",
   },
   {
     id: 2,
-    title: "we deliver your order wherever you are in NY",
-    image: "/slide2.png",
+    title: "we deliver your order wherever you are in",
+    image: "/slide2.webp",
   },
   {
     id: 3,
     title: "the best pizza to share with your family",
-    image: "/slide3.jpg",
+    image: "/slide3.webp",
   },
 ];
 
 const Slider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  //   useEffect(() => {
-  //     const interval = setInterval(
-  //       () =>
-  //         setCurrentSlide((prev) => (prev === data.length - 1 ? 0 : prev + 1)),
-  //       4000
-  //     );
-  //     return () => clearInterval(interval);
-  //   }, []);
+  const router = useRouter();
+
+  useEffect(() => {
+    const interval = setInterval(
+      () =>
+        setCurrentSlide((prev) => (prev === data.length - 1 ? 0 : prev + 1)),
+      4000
+    );
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="flex flex-col h-[calc(100vh-6rem)]  lg:flex-row bg-fuchsia-50">
@@ -39,7 +42,10 @@ const Slider = () => {
         <h1 className="text-5xl text-center uppercase p-4 md:p-10 md:text-6xl xl:text-7xl">
           {data[currentSlide].title}
         </h1>
-        <button className="bg-red-500 text-white py-4 px-8 hover:bg-red-600 transition duration-300 rounded-md">
+        <button
+          className="bg-red-500 text-white py-4 px-8 hover:bg-red-600 transition duration-300 rounded-md"
+          onClick={() => router.push("/menu")}
+        >
           Order Now
         </button>
       </div>

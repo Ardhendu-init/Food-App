@@ -1,22 +1,29 @@
 import { ProductType } from "@/types/types";
+import serverAxios from "@/utils/http";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { FaStar } from "react-icons/fa";
 
 const getProducts = async (category: string) => {
-  const res = await fetch(
-    `http://localhost:3000/api/products?cat=${category}`,
-    {
-      cache: "no-store",
-    }
-  );
-  if (!res.ok) {
-    throw new Error("Failed");
-  }
-  return res.json();
-};
+  try {
+    const response = await serverAxios.get(`/products?cat=${category}`, {
+      headers: {
+        "Cache-Control": "no-store",
+      },
+    });
 
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error("Failed");
+    }
+  } catch (error) {
+    console.error(error);
+
+    throw error;
+  }
+};
 type paramsProps = {
   params: { category: string };
 };
@@ -25,7 +32,7 @@ const CategoryPage: React.FC<paramsProps> = async ({ params }) => {
   const products: ProductType[] = await getProducts(params.category);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 py-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 py-6 px-3">
       {products.map((item) => (
         <div
           key={item.id}

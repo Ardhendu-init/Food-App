@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import { FaUpload, FaPlusCircle, FaTrash, FaImage } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import serverAxios from "@/utils/http";
 
 const AddPage = () => {
   const { data: session, status } = useSession();
@@ -70,14 +71,11 @@ const AddPage = () => {
     data.append("upload_preset", "restaurant");
     data.append("cloud_name", "dgsvcxwsd");
 
-    const res = await fetch(
-      "https://api.cloudinary.com/v1_1/dgsvcxwsd/image/upload",
-      {
-        method: "POST",
+    const res = await fetch(process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!, {
+      method: "POST",
 
-        body: data,
-      }
-    );
+      body: data,
+    });
 
     const resData = await res.json();
 
@@ -91,16 +89,13 @@ const AddPage = () => {
     try {
       const url = await upload();
 
-      const res = await fetch("http://localhost:3000/api/products", {
-        method: "POST",
-        body: JSON.stringify({
-          img: url,
-          ...inputs,
-          options,
-        }),
+      const res = await serverAxios.post("/products", {
+        img: url,
+        ...inputs,
+        options,
       });
 
-      const data = await res.json();
+      const data = await res.data;
 
       router.push(`/product/${data.id}`);
     } catch (err) {
