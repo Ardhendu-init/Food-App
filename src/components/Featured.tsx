@@ -10,11 +10,7 @@ import { FaStar } from "react-icons/fa";
 
 const getFeaturedProduct = async () => {
   try {
-    const response = await serverAxios.get("/api/products", {
-      headers: {
-        "Cache-Control": "no-store",
-      },
-    });
+    const response = await serverAxios.get("/api/products");
 
     if (response.status === 200) {
       return response.data;
@@ -30,11 +26,7 @@ const getFeaturedProduct = async () => {
 
 const getSingleProduct = async (id: string) => {
   try {
-    const response = await serverAxios.get(`/api/products/${id}`, {
-      headers: {
-        "Cache-Control": "no-store",
-      },
-    });
+    const response = await serverAxios.get(`/api/products/${id}`);
 
     if (response.status === 200) {
       return response.data;
