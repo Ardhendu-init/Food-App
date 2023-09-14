@@ -1,33 +1,27 @@
+"use client";
 import { MenuType } from "@/types/types";
 import serverAxios from "@/utils/http";
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import React from "react";
 
-const getCategories = async () => {
-  try {
-    const response = await serverAxios.get("/categories", {
-      headers: {
-        "Cache-Control": "no-store",
-      },
-    });
-
-    if (response.status === 200) {
-      return response.data;
-    } else {
-      throw new Error("Failed");
-    }
-  } catch (error) {
-    console.error(error);
-
-    throw error;
-  }
-};
-
 const MenuPage: React.FC = () => {
-  const menu: MenuType = [];
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["/categories"],
+    queryFn: () => {
+      return serverAxios.get("/categories").then((res) => res.data);
+    },
+  });
+  if (error) {
+    return (
+      <div className="flex justify-center items-center text-lg">
+        Something went Wrong...
+      </div>
+    );
+  }
   return (
     <div className="p-4 lg:px-20 xl:px-40 h-[calc(100vh-6rem)] md:h-[calc(100vh-9rem)] flex flex-col md:flex-row items-center">
-      {menu.map((category) => (
+      {data?.map((category: MenuType) => (
         <Link
           href={`/menu/${category.slug}`}
           key={category.id}

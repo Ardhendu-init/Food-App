@@ -1,32 +1,26 @@
+"use client";
 import { ProductType } from "@/types/types";
 import serverAxios from "@/utils/http";
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { FaStar } from "react-icons/fa";
 
-// const getFeaturedProduct = async () => {
-//   try {
-//     const response = await serverAxios.get("/products", {
-//       headers: {
-//         "Cache-Control": "no-store",
-//       },
-//     });
-
-//     if (response.status === 200) {
-//       return response.data;
-//     } else {
-//       throw new Error("Failed");
-//     }
-//   } catch (error) {
-//     console.error(error);
-
-//     throw error;
-//   }
-// };
-
 const Featured: React.FC = () => {
-  const featuredProducts: ProductType[] = [];
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["/products"],
+    queryFn: () => {
+      return serverAxios.get("/products").then((res) => res.data);
+    },
+  });
+  if (error) {
+    return (
+      <div className="flex justify-center items-center text-lg">
+        Something went Wrong...
+      </div>
+    );
+  }
 
   return (
     <div className="w-full overflow-hidden bg-gray-100 py-10">
@@ -35,7 +29,7 @@ const Featured: React.FC = () => {
           Featured Products
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {featuredProducts.map((item) => (
+          {data?.map((item: ProductType) => (
             <div
               key={item.id}
               className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg  duration-300 text-red-500 hover:bg-fuchsia-50 transition-all relative"

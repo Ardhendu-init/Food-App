@@ -45,7 +45,7 @@ const Footer: React.FC = () => {
         </div>
       </div>
       <div className="text-center mt-8">
-        <p>&copy; {new Date().getFullYear()} PizzaApp. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} CraveWave. All rights reserved.</p>
       </div>
     </footer>
   );

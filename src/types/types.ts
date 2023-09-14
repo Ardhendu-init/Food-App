@@ -7,7 +7,7 @@ export type MenuType = {
   desc?: string;
   img?: string;
   color: string;
-}[];
+};
 
 export type ProductType = {
   id: string;
