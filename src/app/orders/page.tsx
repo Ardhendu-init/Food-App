@@ -24,14 +24,23 @@ const OrdersPage = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: ({ id, status }: { id: string; status: string }) => {
-      return fetch(`${process.env.NEXTAUTH_URL}/api/orders/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(status),
-      });
+    mutationFn: async ({ id, status }: { id: string; status: string }) => {
+      try {
+        const response = await serverAxios.put(
+          `/api/orders/${id}`,
+          { status },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        console.log("first", response.data);
+        return response.data;
+      } catch (error) {
+        // Handle any errors here
+        throw error;
+      }
     },
     onSuccess() {
       queryClient.invalidateQueries({ queryKey: ["orders"] });

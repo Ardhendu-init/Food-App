@@ -15,10 +15,10 @@ export const PUT = async (
       where: {
         id: id,
       },
-      data: { status: body },
+      data: { status: body.status },
     });
     return new NextResponse(
-      JSON.stringify({ message: "Order has been updated!" }),
+      JSON.stringify({ message: "Order status has been updated!" }),
       { status: 200 }
     );
   } catch (err) {
