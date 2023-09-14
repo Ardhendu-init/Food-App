@@ -1,5 +1,7 @@
+"use client";
 import { ProductType } from "@/types/types";
 import serverAxios from "@/utils/http";
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -28,12 +30,26 @@ type paramsProps = {
   params: { category: string };
 };
 
-const CategoryPage: React.FC<paramsProps> = async ({ params }) => {
-  const products: ProductType[] = await getProducts(params.category);
+const CategoryPage: React.FC<paramsProps> = ({ params }) => {
+  const {
+    data: products,
+
+    isLoading,
+  } = useQuery(
+    ["products", params.category],
+    () => getProducts(params.category),
+    {
+      enabled: !!params.category, // Only fetch data when category is available
+    }
+  );
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 py-6 px-3">
-      {products.map((item) => (
+      {products.map((item: ProductType) => (
         <div
           key={item.id}
           className="border rounded-lg overflow-hidden hover:shadow-md transition duration-300 bg-white even:bg-fuchsia-50"

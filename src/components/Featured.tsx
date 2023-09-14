@@ -7,20 +7,31 @@ import Link from "next/link";
 import React from "react";
 import { FaStar } from "react-icons/fa";
 
-const Featured: React.FC = () => {
-  const { isLoading, error, data } = useQuery({
-    queryKey: ["/products"],
-    queryFn: () => {
-      return serverAxios.get("/api/products").then((res) => res.data);
-    },
-  });
-  if (error) {
-    return (
-      <div className="flex justify-center items-center text-lg">
-        Something went Wrong...
-      </div>
-    );
+const getFeaturedProduct = async () => {
+  try {
+    const response = await serverAxios.get("/api/products", {
+      headers: {
+        "Cache-Control": "no-store",
+      },
+    });
+
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error("Failed");
+    }
+  } catch (error) {
+    console.error(error);
+
+    throw error;
   }
+};
+
+const Featured: React.FC = () => {
+  const { data: featureProducts, isLoading } = useQuery(
+    ["featureProducts"],
+    () => getFeaturedProduct()
+  );
 
   return (
     <div className="w-full overflow-hidden bg-gray-100 py-10">
@@ -29,7 +40,7 @@ const Featured: React.FC = () => {
           Featured Products
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {data?.map((item: ProductType) => (
+          {featureProducts?.map((item: ProductType) => (
             <div
               key={item.id}
               className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg  duration-300 text-red-500 hover:bg-fuchsia-50 transition-all relative"
