@@ -1,9 +1,10 @@
 "use client";
 import { ProductType } from "@/types/types";
 import serverAxios from "@/utils/http";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import Link from "next/link";
+
+import { useRouter } from "next/navigation";
 import React from "react";
 import { FaStar } from "react-icons/fa";
 
@@ -27,12 +28,49 @@ const getFeaturedProduct = async () => {
   }
 };
 
+const getSingleProduct = async (id: string) => {
+  try {
+    const response = await serverAxios.get(`/api/products/${id}`, {
+      headers: {
+        "Cache-Control": "no-store",
+      },
+    });
+
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error("Failed");
+    }
+  } catch (error) {
+    console.error(error);
+
+    throw error;
+  }
+};
+
 const Featured: React.FC = () => {
   const { data: featureProducts, isLoading } = useQuery(
     ["featureProducts"],
     () => getFeaturedProduct()
   );
 
+  const router = useRouter();
+
+  // Create a mutation function to fetch a single product
+  const { mutate: fetchSingleProduct } = useMutation(
+    (id: string) => getSingleProduct(id),
+    {
+      onSuccess: (data: ProductType) => {
+        // Redirect to the single product page with the fetched data
+        router.push(`/product/${data.id}`);
+      },
+    }
+  );
+
+  const handleOrderNowClick = (id: string) => {
+    // Trigger the mutation to fetch the single product
+    fetchSingleProduct(id);
+  };
   return (
     <div className="w-full overflow-hidden bg-gray-100 py-10">
       <div className="container mx-auto">
@@ -79,12 +117,12 @@ const Featured: React.FC = () => {
                   </div>
                 )}
                 <span className="text-xl font-bold">₹{item.price}</span>
-                <Link
+                <button
                   className="bg-red-500 text-white p-2 rounded-md "
-                  href={`/product/${item.id}`}
+                  onClick={() => handleOrderNowClick(item.id)} // Call the function when clicked
                 >
                   Order Now
-                </Link>
+                </button>
               </div>
             </div>
           ))}
