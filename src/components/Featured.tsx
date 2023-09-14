@@ -11,7 +11,7 @@ const Featured: React.FC = () => {
   const { isLoading, error, data } = useQuery({
     queryKey: ["/products"],
     queryFn: () => {
-      return serverAxios.get("/products").then((res) => res.data);
+      return serverAxios.get("/api/products").then((res) => res.data);
     },
   });
   if (error) {

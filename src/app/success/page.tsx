@@ -15,9 +15,12 @@ const SuccessPage = () => {
     resetCart();
     const makeRequest = async () => {
       try {
-        await fetch(`http://localhost:3000/api/confirm/${payment_intent}`, {
-          method: "PUT",
-        });
+        await fetch(
+          `${process.env.NEXTAUTH_URL}/api/confirm/${payment_intent}`,
+          {
+            method: "PUT",
+          }
+        );
         setTimeout(() => {
           router.push("/orders");
         }, 1000);

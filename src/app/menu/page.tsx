@@ -9,7 +9,7 @@ const MenuPage: React.FC = () => {
   const { isLoading, error, data } = useQuery({
     queryKey: ["/categories"],
     queryFn: () => {
-      return serverAxios.get("/categories").then((res) => res.data);
+      return serverAxios.get("/api/categories").then((res) => res.data);
     },
   });
   if (error) {

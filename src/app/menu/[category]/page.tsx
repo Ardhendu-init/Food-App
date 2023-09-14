@@ -7,7 +7,7 @@ import { FaStar } from "react-icons/fa";
 
 const getProducts = async (category: string) => {
   try {
-    const response = await serverAxios.get(`/products?cat=${category}`, {
+    const response = await serverAxios.get(`/api/products?cat=${category}`, {
       headers: {
         "Cache-Control": "no-store",
       },

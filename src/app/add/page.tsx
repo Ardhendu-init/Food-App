@@ -89,7 +89,7 @@ const AddPage = () => {
     try {
       const url = await upload();
 
-      const res = await serverAxios.post("/products", {
+      const res = await serverAxios.post("/api/products", {
         img: url,
         ...inputs,
         options,

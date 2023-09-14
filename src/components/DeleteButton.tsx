@@ -2,7 +2,7 @@
 
 import serverAxios from "@/utils/http";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
+
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
@@ -20,7 +20,7 @@ const DeleteButton = ({ id }: { id: string }) => {
 
   const handleDelete = async () => {
     try {
-      const response = await serverAxios.delete(`/products/${id}`);
+      const response = await serverAxios.delete(`/api/products/${id}`);
 
       if (response.status === 200) {
         router.push("/menu");

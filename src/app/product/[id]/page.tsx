@@ -7,7 +7,7 @@ import React from "react";
 
 const getSingleProduct = async (id: string) => {
   try {
-    const response = await serverAxios.get(`/products/${id}`, {
+    const response = await serverAxios.get(`/api/products/${id}`, {
       headers: {
         "Cache-Control": "no-store",
       },

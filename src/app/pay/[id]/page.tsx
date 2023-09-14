@@ -18,7 +18,7 @@ const PayPage = ({ params }: { params: { id: string } }) => {
   useEffect(() => {
     const makeRequest = async () => {
       try {
-        const res = await serverAxios.post(`/create-intent/${id}`);
+        const res = await serverAxios.post(`/api/create-intent/${id}`);
         const data = await res.data;
         setClientSecret(data.clientSecret);
       } catch (err) {

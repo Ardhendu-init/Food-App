@@ -21,7 +21,7 @@ const CartPage = () => {
       router.push("/login");
     } else {
       try {
-        const res = await serverAxios.post("/orders", {
+        const res = await serverAxios.post("/api/orders", {
           price: totalPrice,
           products,
           status: "Paid!",
