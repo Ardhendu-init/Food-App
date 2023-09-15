@@ -4,10 +4,12 @@ import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useCartStore } from "@/utils/store";
 
 const LoginUser: React.FC = () => {
   const { status, data } = useSession();
   const router = useRouter();
+  const { resetCart } = useCartStore();
 
   return (
     <div className="relative group">
@@ -38,7 +40,10 @@ const LoginUser: React.FC = () => {
             </p>
             <button
               className="cursor-pointer bg-orange-300 px-2  rounded-md   font-medium hover:bg-orange-400 "
-              onClick={() => signOut()}
+              onClick={() => {
+                signOut();
+                resetCart();
+              }}
             >
               Logout
             </button>

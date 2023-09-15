@@ -14,7 +14,7 @@ const links = [
   { id: 1, title: "Home", url: "/" },
   { id: 2, title: "Menu", url: "/menu" },
 
-  { id: 4, title: "Contact", url: "#footer" },
+  { id: 4, title: "Contact", url: "#contact" },
 ];
 
 const Menu = () => {
