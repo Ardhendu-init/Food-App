@@ -25,12 +25,14 @@ const MenuPage: React.FC = () => {
         <Link
           href={`/menu/${category.slug}`}
           key={category.id}
-          className="w-full h-1/3 bg-cover p-8 md:h-[45vh]"
+          className="w-full h-1/3 bg-cover sm:p-8 p-4 md:h-[45vh]"
           style={{ backgroundImage: `url(${category.img})` }}
         >
           <div className={`text-${category.color} w-1/2`}>
-            <h1 className="uppercase font-bold text-3xl">{category.title}</h1>
-            <p className="text-base my-8">{category.desc}</p>
+            <h1 className="uppercase font-bold text-2xl sm:text-3xl">
+              {category.title}
+            </h1>
+            <p className="text-base sm:my-8 my-2">{category.desc}</p>
             <button
               className={`hidden 2xl:block bg-${category.color} text-${
                 category.color === "black" ? "white" : "red-500"

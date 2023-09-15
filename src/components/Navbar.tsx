@@ -8,7 +8,7 @@ import LoginUser from "./LoginUser";
 const menuItems = [
   { text: "Home", path: "/" },
   { text: "Menu", path: "/menu" },
-  { text: "Contact", path: "/contact" },
+  { text: "Contact", path: "#footer" },
 ];
 
 const Navbar: React.FC = () => {

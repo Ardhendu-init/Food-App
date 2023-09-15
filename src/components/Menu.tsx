@@ -8,13 +8,13 @@ import CartIcon from "./CartIcon";
 import { RiMenu3Line } from "react-icons/ri";
 import { MdRestaurantMenu } from "react-icons/md";
 import { signOut, useSession } from "next-auth/react";
-import LoginUser from "./LoginUser";
+
 import { useRouter } from "next/navigation";
 const links = [
-  { id: 1, title: "Homepage", url: "/" },
+  { id: 1, title: "Home", url: "/" },
   { id: 2, title: "Menu", url: "/menu" },
 
-  { id: 4, title: "Contact", url: "/" },
+  { id: 4, title: "Contact", url: "#footer" },
 ];
 
 const Menu = () => {
