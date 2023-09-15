@@ -99,15 +99,7 @@ const CheckoutForm = () => {
         id="submit"
         className="bg-red-500 text-white p-4 rounded-md w-28"
       >
-        <span id="button-text">
-          {isLoading ? (
-            <div className="spinne" id="spinner">
-              Processing ...
-            </div>
-          ) : (
-            "Pay now"
-          )}
-        </span>
+        {isLoading ? " Processing ..." : "Pay now"}
       </button>
       {/* Show any error or success messages */}
       {message && <div id="payment-message">{message}</div>}
