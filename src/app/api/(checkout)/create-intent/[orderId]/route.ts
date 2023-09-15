@@ -17,11 +17,11 @@ export const POST = async (
 
   if (order) {
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: order.price * 100,
+      amount: order.price,
       currency: "inr",
-      // automatic_payment_methods: {
-      //   enabled: true,
-      // },
+      automatic_payment_methods: {
+        enabled: true,
+      },
     });
 
     await prisma.order.update({

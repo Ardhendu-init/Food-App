@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 const OrdersPage = () => {
   const [statusUpdates, setStatusUpdates] = useState<{ [key: string]: string }>(
@@ -35,7 +36,7 @@ const OrdersPage = () => {
             },
           }
         );
-        console.log("first", response.data);
+
         return response.data;
       } catch (error) {
         // Handle any errors here
@@ -44,6 +45,7 @@ const OrdersPage = () => {
     },
     onSuccess() {
       queryClient.invalidateQueries({ queryKey: ["orders"] });
+      toast.success("The product status has been changed !");
     },
   });
 
@@ -100,6 +102,7 @@ const OrdersPage = () => {
                             });
                           }}
                           className="bg-transparent p-2 ring-1 ring-red-100 rounded-md"
+                          placeholder={item.status}
                         >
                           <option value="Preparing">Preparing your Food</option>
                           <option value="Preparation Done">
