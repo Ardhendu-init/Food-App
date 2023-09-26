@@ -46,7 +46,7 @@ const Menu = () => {
 
           {status === "unauthenticated" ? (
             <button
-              className="cursor-pointer bg-orange-300 hover:bg-orange-400 px-2  rounded-md   font-medium"
+              className="cursor-pointer bg-orange-300 hover:bg-orange-400 px-2 py-1 text-2xl  rounded-md   font-medium hover:font-bold"
               onClick={() => router.push("/login")}
             >
               Login

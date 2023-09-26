@@ -61,22 +61,25 @@ const Price = ({ product }: { product: ProductType }) => {
       <h2 className="text-2xl font-bold text-red-500">₹{total.toFixed(2)}</h2>
 
       {/* OPTIONS CONTAINER */}
-      <div className="flex gap-4">
-        {product.options?.length &&
-          product.options?.map((option, index) => (
-            <button
-              key={option.title}
-              className={`min-w-[6rem] py-2 px-4 rounded-md ${
-                selected === index
-                  ? "bg-red-500 text-white"
-                  : "bg-red-100 text-red-500"
-              }`}
-              onClick={() => setSelected(index)}
-            >
-              {option.title}
-            </button>
-          ))}
-      </div>
+      {product?.options && product.options?.length > 0 && (
+        <div className="flex gap-4">
+          {product.options &&
+            product.options?.map((option, index) => (
+              <button
+                key={option.title}
+                className={`min-w-[6rem] py-2 px-4 rounded-md ${
+                  selected === index
+                    ? "bg-red-500 text-white"
+                    : "bg-red-100 text-red-500"
+                }`}
+                onClick={() => setSelected(index)}
+              >
+                {option.title}
+              </button>
+            ))}
+        </div>
+      )}
+
       {/* QUANTITY AND ADD BUTTON CONTAINER */}
       <div className="flex justify-between  flex-col gap-6">
         {/* QUANTITY */}
