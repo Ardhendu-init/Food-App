@@ -104,7 +104,7 @@ const AddPage = () => {
   };
 
   return (
-    <div className="p-4 sm:px-8 md:px-12 lg:px-20 xl:px-40  mx-auto bg-[url('/offerBg.png')]">
+    <div className="p-4 sm:px-8 md:px-12 lg:px-20 xl:px-40  mx-auto bg-[url('/offerBg.webp')]">
       <form onSubmit={handleSubmit} className="w-full max-w-xl mx-auto mt-4">
         <h1 className="text-4xl mb-4 text-gray-300 font-bold text-center">
           Add New Product
